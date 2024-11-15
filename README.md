@@ -1,6 +1,6 @@
-# ZenML NFS Infrastructure with OpenTofu
+# NFS Infrastructure with OpenTofu
 
-This repository contains OpenTofu (formerly known as OpenTerraform) infrastructure code for deploying a NFS server on Google Cloud Platform for ZenML storage.
+This repository contains OpenTofu (formerly known as OpenTerraform) infrastructure code for deploying a NFS server on Google Cloud Platform.
 
 ## Prerequisites
 
@@ -55,7 +55,7 @@ tofu destroy
 - GCP Persistent Disk for NFS (30GB by default)
 - GCP Compute Instance (e2-medium) running as NFS server
 - GCP Firewall rules for NFS access
-- NFS share at `/mnt/nfs/zenml`
+- NFS share at `/mnt/nfs/data`
 
 ## Outputs
 
@@ -68,7 +68,7 @@ Example usage of the NFS share:
 # On client machine
 sudo apt-get install -y nfs-common
 sudo mkdir -p /mount/point
-sudo mount -t nfs <nfs_server_public_ip>:/mnt/nfs/zenml /mount/point
+sudo mount -t nfs <nfs_server_public_ip>:/mnt/nfs/data /mount/point
 ```
 
 ## Security Considerations

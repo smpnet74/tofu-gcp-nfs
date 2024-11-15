@@ -1,6 +1,6 @@
 # Create a persistent disk for NFS
 resource "google_compute_disk" "nfs_disk" {
-  name = "zenml-nfs-disk"
+  name = "nfs-disk"
   size = var.nfs_disk_size
   type = "pd-standard"
   zone = var.zone
@@ -27,12 +27,12 @@ locals {
     echo '/dev/sdb /mnt/nfs ext4 defaults 0 0' >> /etc/fstab
 
     # Create the NFS export directory
-    mkdir -p /mnt/nfs/zenml
-    chown nobody:nogroup /mnt/nfs/zenml
-    chmod 777 /mnt/nfs/zenml
+    mkdir -p /mnt/nfs/data
+    chown nobody:nogroup /mnt/nfs/data
+    chmod 777 /mnt/nfs/data
 
     # Configure NFS exports
-    echo '/mnt/nfs/zenml *(rw,sync,no_root_squash,no_subtree_check)' > /etc/exports
+    echo '/mnt/nfs/data *(rw,sync,no_root_squash,no_subtree_check)' > /etc/exports
 
     # Enable and start services
     systemctl enable rpcbind
@@ -47,7 +47,7 @@ locals {
 
 # Create NFS server instance
 resource "google_compute_instance" "nfs_server" {
-  name         = "zenml-nfs-server"
+  name         = "nfs-server"
   machine_type = var.nfs_instance_type
   zone         = var.zone
 
